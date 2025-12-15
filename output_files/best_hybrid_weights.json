@@ -1,0 +1,5 @@
+{
+    "tfidf_weight": 0.2,
+    "bert_weight": 0.8,
+    "avg_ndcg@5": 0.7858346206553111
+}
