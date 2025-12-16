@@ -1,44 +1,96 @@
 # Content-Based-Podcast-Episode-Recommendation-System
-Setup
-Environment:
-Requires Python 3.8+ and pip. Recommended to use a virtual environment (e.g., venv or conda).
 
-Dependencies:
-Install required packages via:
+This repository provides a scalable, end-to-end pipeline for podcast episode recommendation. It supports both lexical and semantic retrieval models (e.g., TF-IDF, BERT-based embeddings) and includes a realistic evaluation framework for ranking quality.
+
+Features
+
+- Modular data preprocessing and feature engineering
+
+- Lexical models (TF-IDF)
+
+- Semantic models (Sentence-BERT)
+
+- Scalable training and evaluation pipeline
+
+- Reproducible experiments with saved metrics, plots, and tables
+
+Setup
+Environment
+
+Python 3.8+
+
+pip
+
+It is strongly recommended to use a virtual environment:
+
+python -m venv venv
+source venv/bin/activate    # Windows: venv\Scripts\activate
+
+Dependencies
+
+Install all required packages using:
 
 pip install -r requirements.txt
+
 Core dependencies:
 
 pandas
+
 numpy
+
 scikit-learn
+
 sentence-transformers
+
 matplotlib
+
 seaborn
+
 joblib
+
 scipy
+
 tqdm
+
 Data
 
-Note: The dataset is not included due to licensing restrictions. Dataset can be found on HuggingFace by searching SPoRC.
+Note: Only episodeLevelDatasetSample.jsonl is included
+
+You can obtain full public podcast episode datasets from HuggingFace. One commonly used option is SPoRC. Search HuggingFace datasets for:
+
+SPoRC
+
+Once downloaded, place the raw data file in the data/ directory.
 
 How to Run
 
-Data Preprocessing & Feature Engineering
+1. Data Preprocessing & Feature Engineering, use the part1_eda.ipynb
 
-Run preprocessing to clean raw data and create modeling features.
+Clean the raw dataset and generate modeling features:
 
-python scripts/preprocess.py --input data/your_raw_file.jsonl --output data/processed_episodes.pkl
-python scripts/feature_engineering.py --input data/processed_episodes.pkl
-Model Training
+python scripts/preprocess.py \
+  --input data/your_raw_file.jsonl \
+  --output data/processed_episodes.pkl
+python scripts/feature_engineering.py \
+  --input data/processed_episodes.pkl
+  
+2. Model Training, use the part2_modeltraining.ipynb
 
-Train baseline and supervised ranking models.
+Train baseline and supervised ranking models:
 
-python scripts/train_models.py --data data/processed_episodes.pkl --output models/
+python scripts/train_models.py \
+  --data data/processed_episodes.pkl \
+  --output models/
 
-Evaluation
+Trained models will be saved to the models/ directory.
 
-Run evaluation to compute metrics and generate figures/tables.
+3. Evaluation
 
-python scripts/evaluate.py --models models/ --data data/processed_episodes.pkl --output results/
-All output metrics, plots, and tables will be saved in the results/ directory.
+Compute ranking metrics and generate plots and tables:
+
+python scripts/evaluate.py \
+  --models models/ \
+  --data data/processed_episodes.pkl \
+  --output results/
+
+All evaluation outputs (metrics, figures, and tables) will be stored in the results/ directory.
